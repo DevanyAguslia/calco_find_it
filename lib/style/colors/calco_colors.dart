@@ -6,6 +6,7 @@ enum CalcoColors {
   primaryGreen("kPrimaryGreen", Color(0xff37A841)),
   secondaryGreen("kSecondaryGreen", Color(0xffB1FFAB)),
   grey("kGrey", Color(0xff9B9299)),
+  secondGrey("kSecondGrey", Color(0xffB2B2B2)),
   secondaryBlue("kSecondaryBlue", Color(0xff4EB3DF));
 
   const CalcoColors(this.name, this.color);

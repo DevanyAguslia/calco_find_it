@@ -1,4 +1,8 @@
+import 'package:calco/style/colors/calco_colors.dart';
+import 'package:calco/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
+
+import '../static/navigation_route.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -8,12 +12,10 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          // Background abu-abu layer
+          // Background abu-abu
           Container(
             color: Colors.grey.shade300,
           ),
-
-          // Layer atas putih + isi kontennya
           ClipPath(
             clipper: BottomCurveClipper(),
             child: Container(
@@ -29,13 +31,14 @@ class LoginPage extends StatelessWidget {
                       width: 48,
                       height: 48,
                     ),
-                    const SizedBox(width: 12),
-                    const Text(
-                      "Register Akun",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    const SizedBox(height: 12),
+                    Text(
+                      "Selamat Datang \nKembali!",
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineMedium!
+                          .copyWith(fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
@@ -43,22 +46,57 @@ class LoginPage extends StatelessWidget {
             ),
           ),
 
-          const Positioned(
+          Positioned(
             top: 300,
             left: 0,
             right: 0,
-            child: Column(
-              children: [
-                Text("Username"),
-                TextField(),
-                Text("Username"),
-                TextField(),
-                Text("Username"),
-                TextField(),
-                Text("Username"),
-                TextField(),
-                // Tambah form / widget lain
-              ],
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CustomTextfield(
+                    title: "Email",
+                    hintText: "johndoe@gmail.com",
+                  ),
+                  CustomTextfield(
+                    title: "Pasword",
+                    hintText: "Masukkan password disini",
+                  ),
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: Text(
+                      "Lupa Password?",
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            color: CalcoColors.grey.color,
+                          ),
+                    ),
+                  ),
+                  const SizedBox(height: 30),
+                  Align(
+                    alignment: Alignment.center,
+                    child: SizedBox(
+                      height: 56,
+                      width: 183,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: CalcoColors.primary.color),
+                        onPressed: () {
+                          Navigator.pushNamed(
+                              context, NavigationRoute.homeRoute.name);
+                        },
+                        child: Text(
+                          "Masuk",
+                          style:
+                              Theme.of(context).textTheme.titleMedium!.copyWith(
+                                    color: Colors.white,
+                                  ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],

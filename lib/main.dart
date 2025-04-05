@@ -1,4 +1,5 @@
 import 'package:calco/pages/login_page.dart';
+import 'package:calco/pages/sign_up_page.dart';
 import 'package:flutter/material.dart';
 
 import 'pages/home_page.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
         NavigationRoute.welcomeRoute.name: (context) => const WelcomePage(),
         NavigationRoute.homeRoute.name: (context) => const HomePage(),
         NavigationRoute.loginRoute.name: (context) => const LoginPage(),
+        NavigationRoute.registerRoute.name: (context) => const SignUpPage(),
       },
     );
   }

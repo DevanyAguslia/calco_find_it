@@ -75,7 +75,8 @@ class WelcomePage extends StatelessWidget {
                             fontWeight: FontWeight.bold),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            // navigate to desired screen
+                            Navigator.pushNamed(
+                                context, NavigationRoute.registerRoute.name);
                           })
                   ]),
             ),
