@@ -3,6 +3,8 @@ import 'package:calco/style/colors/calco_colors.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
+import '../widgets/custom_button.dart';
+
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
 
@@ -45,22 +47,11 @@ class WelcomePage extends StatelessWidget {
               height: 244,
             ),
             const SizedBox(height: 47),
-            SizedBox(
-              height: 56,
-              width: 183,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: CalcoColors.primary.color),
-                onPressed: () {
-                  Navigator.pushNamed(context, NavigationRoute.loginRoute.name);
-                },
-                child: Text(
-                  "Mulai Sekarang",
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                        color: Colors.white,
-                      ),
-                ),
-              ),
+            CustomButton(
+              title: "Mulai Sekarang",
+              onPressed: () {
+                Navigator.pushNamed(context, NavigationRoute.loginRoute.name);
+              },
             ),
             const SizedBox(height: 18),
             RichText(

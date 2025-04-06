@@ -1,4 +1,5 @@
 import 'package:calco/pages/login_page.dart';
+import 'package:calco/pages/role_user_page.dart';
 import 'package:calco/pages/sign_up_page.dart';
 import 'package:flutter/material.dart';
 
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
         NavigationRoute.homeRoute.name: (context) => const HomePage(),
         NavigationRoute.loginRoute.name: (context) => const LoginPage(),
         NavigationRoute.registerRoute.name: (context) => const SignUpPage(),
+        NavigationRoute.roleUserRoute.name: (context) => const RoleUserPage(),
       },
     );
   }

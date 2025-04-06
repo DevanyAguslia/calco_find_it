@@ -1,4 +1,4 @@
-import 'package:calco/style/colors/calco_colors.dart';
+import 'package:calco/widgets/custom_button.dart';
 import 'package:calco/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
 
@@ -72,27 +72,14 @@ class SignUpPage extends StatelessWidget {
                     hintText: "Konfirmasi ulang password",
                   ),
                   Align(
-                    alignment: Alignment.center,
-                    child: SizedBox(
-                      height: 56,
-                      width: 183,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: CalcoColors.primary.color),
+                      alignment: Alignment.center,
+                      child: CustomButton(
+                        title: "Daftar Akun",
                         onPressed: () {
                           Navigator.pushNamed(
                               context, NavigationRoute.homeRoute.name);
                         },
-                        child: Text(
-                          "Daftar Akun",
-                          style:
-                              Theme.of(context).textTheme.titleMedium!.copyWith(
-                                    color: Colors.white,
-                                  ),
-                        ),
-                      ),
-                    ),
-                  ),
+                      )),
                 ],
               ),
             ),

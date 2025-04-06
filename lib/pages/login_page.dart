@@ -3,6 +3,7 @@ import 'package:calco/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
 
 import '../static/navigation_route.dart';
+import '../widgets/custom_button.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -75,25 +76,15 @@ class LoginPage extends StatelessWidget {
                   const SizedBox(height: 30),
                   Align(
                     alignment: Alignment.center,
-                    child: SizedBox(
-                      height: 56,
-                      width: 183,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: CalcoColors.primary.color),
-                        onPressed: () {
-                          Navigator.pushNamed(
-                              context, NavigationRoute.homeRoute.name);
-                        },
-                        child: Text(
-                          "Masuk",
-                          style:
-                              Theme.of(context).textTheme.titleMedium!.copyWith(
-                                    color: Colors.white,
-                                  ),
-                        ),
-                      ),
-                    ),
+                    child: Align(
+                        alignment: Alignment.center,
+                        child: CustomButton(
+                          title: "Masuk",
+                          onPressed: () {
+                            Navigator.pushNamed(
+                                context, NavigationRoute.roleUserRoute.name);
+                          },
+                        )),
                   ),
                 ],
               ),

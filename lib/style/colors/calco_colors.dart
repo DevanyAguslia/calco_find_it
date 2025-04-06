@@ -7,7 +7,8 @@ enum CalcoColors {
   secondaryGreen("kSecondaryGreen", Color(0xffB1FFAB)),
   grey("kGrey", Color(0xff9B9299)),
   secondGrey("kSecondGrey", Color(0xffB2B2B2)),
-  secondaryBlue("kSecondaryBlue", Color(0xff4EB3DF));
+  secondaryBlue("kSecondaryBlue", Color(0xff4EB3DF)),
+  blueBackground("kBlueBackground", Color(0xffACDCF0));
 
   const CalcoColors(this.name, this.color);
 
