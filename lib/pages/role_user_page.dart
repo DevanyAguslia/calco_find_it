@@ -66,17 +66,35 @@ class RoleUserPage extends StatelessWidget {
             ),
 
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Wrap(
-                spacing: 16,
-                runSpacing: 16,
-                children: const [
-                  RoleImageButton(),
-                  RoleImageButton(),
-                  RoleImageButton(),
-                ],
-              ),
-            ),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  children: [
+                    RoleImageButton(
+                      title: "Dokter Terapis",
+                      imageUrl: "assets/images/images_doctor.png",
+                      onTap: () {
+                        Navigator.pushNamed(
+                            context, NavigationRoute.homeRoute.name);
+                      },
+                    ),
+                    RoleImageButton(
+                      title: "Orang Tua",
+                      imageUrl: "assets/images/images_parent.png",
+                      onTap: () {
+                        Navigator.pushNamed(
+                            context, NavigationRoute.homeRoute.name);
+                      },
+                    ),
+                    RoleImageButton(
+                      title: "Seseorang dengan autisme",
+                      imageUrl: "assets/images/image_autism.png",
+                      onTap: () {
+                        Navigator.pushNamed(
+                            context, NavigationRoute.meditationHomeRoute.name);
+                      },
+                    ),
+                  ],
+                )),
 
             const SizedBox(height: 32), // Tambahin biar ga mentok bawah
           ],
@@ -87,17 +105,23 @@ class RoleUserPage extends StatelessWidget {
 }
 
 class RoleImageButton extends StatelessWidget {
+  final String title;
+  final String imageUrl;
+  final VoidCallback? onTap;
+
   const RoleImageButton({
+    required this.title,
+    required this.imageUrl,
+    this.onTap,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Navigator.pushNamed(context, NavigationRoute.homeRoute.name);
-      },
+      onTap: onTap,
       child: Container(
+        width: 200,
         margin: const EdgeInsets.only(bottom: 26),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
         decoration: BoxDecoration(
@@ -111,10 +135,11 @@ class RoleImageButton extends StatelessWidget {
             ]),
         child: Column(
           children: [
-            Image.asset("assets/images/images_doctor.png"),
+            Image.asset(imageUrl),
             const SizedBox(height: 32),
             Text(
-              "Dokter Terapis",
+              title,
+              textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.titleMedium,
             ),
           ],

@@ -7,6 +7,7 @@ enum CalcoColors {
   secondaryGreen("kSecondaryGreen", Color(0xffB1FFAB)),
   grey("kGrey", Color(0xff9B9299)),
   secondGrey("kSecondGrey", Color(0xffB2B2B2)),
+  primaryBlue("kPrimaryBlue", Color(0xff19759C)),
   secondaryBlue("kSecondaryBlue", Color(0xff4EB3DF)),
   blueBackground("kBlueBackground", Color(0xffACDCF0));
 

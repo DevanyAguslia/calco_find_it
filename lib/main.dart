@@ -1,4 +1,7 @@
 import 'package:calco/pages/login_page.dart';
+import 'package:calco/pages/meditation_guide_page.dart';
+import 'package:calco/pages/meditation_home_page.dart';
+import 'package:calco/pages/meditation_review_page.dart';
 import 'package:calco/pages/role_user_page.dart';
 import 'package:calco/pages/sign_up_page.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +33,12 @@ class MyApp extends StatelessWidget {
         NavigationRoute.loginRoute.name: (context) => const LoginPage(),
         NavigationRoute.registerRoute.name: (context) => const SignUpPage(),
         NavigationRoute.roleUserRoute.name: (context) => const RoleUserPage(),
+        NavigationRoute.meditationHomeRoute.name: (context) =>
+            const MeditationHomePage(),
+        NavigationRoute.meditationGuideRoute.name: (context) =>
+            const MeditationGuidePage(),
+        NavigationRoute.meditationReviewRoute.name: (context) =>
+            const MeditationReviewPage(),
       },
     );
   }
