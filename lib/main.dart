@@ -4,15 +4,31 @@ import 'package:calco/pages/meditation_home_page.dart';
 import 'package:calco/pages/meditation_review_page.dart';
 import 'package:calco/pages/role_user_page.dart';
 import 'package:calco/pages/sign_up_page.dart';
+import 'package:calco/providers/auth_provider.dart';
+import 'package:calco/services/auth_service.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'pages/home_page.dart';
 import 'pages/welcome_page.dart';
 import 'static/navigation_route.dart';
 import 'style/theme/calco_theme.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+  runApp(MultiProvider(providers: [
+    Provider(
+      create: (context) => AuthService(),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => AuthProvider(
+        context.read<AuthService>(),
+      ),
+    ),
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
