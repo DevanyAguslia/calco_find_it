@@ -7,8 +7,15 @@ import 'package:flutter/material.dart';
 import '../static/navigation_route.dart';
 import '../widgets/custom_button.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  // int selectedIndex = -1;
 
   @override
   Widget build(BuildContext context) {
@@ -77,93 +84,145 @@ class HomePage extends StatelessWidget {
                     child: ImageIconButton(
                   imageUrl: "assets/icons/icon_meditation.png",
                   title: "Pemandu Meditasi",
-                  onTap: () async {
-                    return showDialog(
+                  onTap: () {
+                    showDialog(
                       context: context,
                       builder: (context) {
-                        return AlertDialog(
-                          backgroundColor: Colors.white,
-                          contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 21),
-                          title: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                width: 32,
-                                height: 32,
-                                padding: const EdgeInsets.all(5),
-                                margin: const EdgeInsets.only(right: 12),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: CalcoColors.secondary.color,
+                        int selectedIndex = 1;
+
+                        return StatefulBuilder(builder: (context, setState) {
+                          return AlertDialog(
+                            backgroundColor: Colors.white,
+                            contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 21),
+                            title: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  width: 32,
+                                  height: 32,
+                                  padding: const EdgeInsets.all(5),
+                                  margin: const EdgeInsets.only(right: 12),
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: CalcoColors.secondary.color,
+                                  ),
+                                  child: Image.asset(
+                                    "assets/icons/icon_meditation.png",
+                                    width: 21,
+                                    height: 21,
+                                  ),
                                 ),
-                                child: Image.asset(
-                                  "assets/icons/icon_meditation.png",
-                                  width: 21,
-                                  height: 21,
+                                Flexible(
+                                  child: Text(
+                                    "Pemandu meditasi",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleLarge!
+                                        .copyWith(
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                "Pemandu meditasi",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleLarge!
-                                    .copyWith(
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                              ),
-                            ],
-                          ),
-                          content: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                "Bantu anak merasa lebih tenang dengan panduan meditasi berbasis suara.",
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .copyWith(
-                                      color: CalcoColors.secondGrey.color,
-                                    ),
-                              ),
-                              const SizedBox(height: 40),
-                              const Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Expanded(
+                              ],
+                            ),
+                            content: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  "Bantu anak merasa lebih tenang dengan panduan meditasi berbasis suara.",
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(
+                                        color: CalcoColors.secondGrey.color,
+                                      ),
+                                ),
+                                const SizedBox(height: 40),
+                                // Row(
+                                //   mainAxisAlignment:
+                                //       MainAxisAlignment.spaceBetween,
+                                //   children: [
+                                //     Expanded(
+                                //         child: CustomTimeButton(
+                                //       time: "00",
+                                //       title: "Jam",
+                                //       isSelected: selectedIndex == 0,
+                                //       onTap: () {
+                                //         setState(() {
+                                //           selectedIndex = 0;
+                                //           print("selectedIndex: $selectedIndex");
+                                //         });
+                                //       },
+                                //     )),
+                                //     const SizedBox(width: 10),
+                                //     Expanded(
+                                //         child: CustomTimeButton(
+                                //       time: "15",
+                                //       isSelected: selectedIndex == 1,
+                                //       onTap: () {
+                                //         setState(() {
+                                //           selectedIndex = 1;
+                                //           print("selectedIndex: $selectedIndex");
+                                //         });
+                                //       },
+                                //     )),
+                                //     const SizedBox(width: 10),
+                                //     Expanded(
+                                //         child: CustomTimeButton(
+                                //       time: "30",
+                                //       title: "Detik",
+                                //       isSelected: selectedIndex == 2,
+                                //       onTap: () =>
+                                //           setState(() => selectedIndex = 2),
+                                //     )),
+                                //   ],
+                                // ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: List.generate(3, (index) {
+                                    final timeOptions = ["00", "15", "30"];
+
+                                    final titleOptions = [
+                                      "Jam",
+                                      "Menit",
+                                      "Detik"
+                                    ];
+                                    return Expanded(
                                       child: CustomTimeButton(
-                                    time: "5",
-                                  )),
-                                  SizedBox(width: 10),
-                                  Expanded(
-                                      child: CustomTimeButton(
-                                    time: "10",
-                                  )),
-                                  SizedBox(width: 10),
-                                  Expanded(
-                                      child: CustomTimeButton(
-                                    time: "15",
-                                  )),
-                                ],
-                              ),
-                              const SizedBox(height: 54),
-                              Align(
-                                alignment: Alignment.center,
-                                child: Align(
-                                    alignment: Alignment.center,
-                                    child: CustomButton(
-                                      title: "Mulai Terapi",
-                                      onPressed: () {
-                                        Navigator.pushNamed(context,
-                                            NavigationRoute.homeRoute.name);
-                                      },
-                                    )),
-                              ),
-                            ],
-                          ),
-                        );
+                                        time: timeOptions[index],
+                                        title: titleOptions[index],
+                                        isSelected: selectedIndex == index,
+                                        onTap: () {
+                                          setState(() {
+                                            selectedIndex = index;
+                                          });
+                                        },
+                                      ),
+                                    );
+                                  }),
+                                ),
+                                const SizedBox(height: 54),
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: Align(
+                                      alignment: Alignment.center,
+                                      child: CustomButton(
+                                        title: "Mulai Terapi",
+                                        onPressed: () {
+                                          Navigator.pushNamed(context,
+                                              NavigationRoute.homeRoute.name);
+                                        },
+                                      )),
+                                ),
+                              ],
+                            ),
+                          );
+                        });
                       },
                     );
                   },
@@ -177,6 +236,7 @@ class HomePage extends StatelessWidget {
                     return showDialog(
                       context: context,
                       builder: (context) {
+                        int selectedIndex = 1;
                         return AlertDialog(
                           backgroundColor: Colors.white,
                           contentPadding: const EdgeInsets.symmetric(
@@ -225,33 +285,45 @@ class HomePage extends StatelessWidget {
                                       ),
                                 ),
                                 const SizedBox(height: 40),
-                                const Row(
+                                Row(
                                   children: [
                                     Expanded(
                                         child: CustomTimeButton(
                                       imageUrl: "assets/icons/icon_white.png",
                                       title: "White Noise",
+                                      isSelected: selectedIndex == 2,
+                                      onTap: () =>
+                                          setState(() => selectedIndex = 2),
                                     )),
-                                    SizedBox(width: 10),
+                                    const SizedBox(width: 10),
                                     Expanded(
                                         child: CustomTimeButton(
                                       imageUrl: "assets/icons/icon_brown.png",
                                       title: "Brown Noise",
+                                      isSelected: selectedIndex == 2,
+                                      onTap: () =>
+                                          setState(() => selectedIndex = 2),
                                     )),
                                   ],
                                 ),
-                                const Row(
+                                Row(
                                   children: [
                                     Expanded(
                                         child: CustomTimeButton(
                                       imageUrl: "assets/icons/icon_rainy.png",
                                       title: "Suara Hujan",
+                                      isSelected: selectedIndex == 2,
+                                      onTap: () =>
+                                          setState(() => selectedIndex = 2),
                                     )),
-                                    SizedBox(width: 10),
+                                    const SizedBox(width: 10),
                                     Expanded(
                                         child: CustomTimeButton(
                                       imageUrl: "assets/icons/icon_wave.png",
                                       title: "Suara Ombak",
+                                      isSelected: selectedIndex == 2,
+                                      onTap: () =>
+                                          setState(() => selectedIndex = 2),
                                     )),
                                   ],
                                 ),

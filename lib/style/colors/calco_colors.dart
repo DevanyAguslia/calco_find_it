@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 enum CalcoColors {
   primary("kPrimary", Color(0xff99008F)),
+  pastelPrimary("kPasterPrimary", Color(0xffFDE0FB)),
   secondary("kSecondary", Color(0xffFDE0FB)),
   primaryGreen("kPrimaryGreen", Color(0xff37A841)),
   secondaryGreen("kSecondaryGreen", Color(0xffB1FFAB)),
