@@ -17,6 +17,9 @@ class AuthProvider extends ChangeNotifier {
   String? _errorMessage;
   String? get errorMessage => _errorMessage;
 
+  String? _token;
+  String? get token => _token;
+
   // Sign Up
   Future<void> signUp({
     required String username,
@@ -32,7 +35,8 @@ class AuthProvider extends ChangeNotifier {
       );
       _errorMessage = null;
     } catch (e) {
-      _errorMessage = e.toString().replaceFirst('Exception: ', '');
+      _errorMessage = e.toString().replaceFirst('Error: ', '');
+      rethrow;
     } finally {
       _setLoading(false);
     }
@@ -50,8 +54,12 @@ class AuthProvider extends ChangeNotifier {
         password: password,
       );
       _errorMessage = null;
+
+      _token = await _getToken();
+      print("TOKEN USER NOW: $_token");
     } catch (e) {
-      _errorMessage = e.toString().replaceFirst('Exception: ', '');
+      _errorMessage = e.toString().replaceFirst('Error: ', '');
+      rethrow; // <--- Tambahkan ini bro!
     } finally {
       _setLoading(false);
     }
@@ -87,5 +95,10 @@ class AuthProvider extends ChangeNotifier {
   void _setLoading(bool value) {
     _isLoading = value;
     notifyListeners();
+  }
+
+  Future<String?> _getToken() async {
+    final firebaseUser = _authService.getFirebaseUser();
+    return await firebaseUser?.getIdToken();
   }
 }

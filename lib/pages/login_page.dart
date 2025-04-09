@@ -1,12 +1,59 @@
 import 'package:calco/style/colors/calco_colors.dart';
 import 'package:calco/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../providers/auth_provider.dart';
 import '../static/navigation_route.dart';
 import '../widgets/custom_button.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+  }
+
+  void _login() async {
+    if (!_formKey.currentState!.validate()) return;
+
+    final authProvider = context.read<AuthProvider>();
+
+    try {
+      await authProvider.signIn(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+      );
+
+      if (authProvider.user == null) {
+        throw Exception('Akun tidak tersedia');
+      }
+
+      // Kalau berhasil, lanjut ke halaman home atau mana pun
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Login berhasil')),
+      );
+
+      // Optional: Navigasi
+      Navigator.pushReplacementNamed(context, NavigationRoute.homeRoute.name);
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(e.toString())),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,40 +100,65 @@ class LoginPage extends StatelessWidget {
             right: 0,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CustomTextfield(
-                    title: "Email",
-                    hintText: "johndoe@gmail.com",
-                  ),
-                  CustomTextfield(
-                    title: "Pasword",
-                    hintText: "Masukkan password disini",
-                  ),
-                  Align(
-                    alignment: Alignment.bottomRight,
-                    child: Text(
-                      "Lupa Password?",
-                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            color: CalcoColors.grey.color,
-                          ),
+              child: Form(
+                key: _formKey,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CustomTextfield(
+                      title: "Email",
+                      hintText: "johndoe@gmail.com",
+                      controller: emailController,
+                      textInputType: TextInputType.emailAddress,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Email tidak boleh kosong";
+                        }
+
+                        final emailRegex =
+                            RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+                        if (!emailRegex.hasMatch(value)) {
+                          return "Format email salah";
+                        }
+
+                        return null;
+                      },
                     ),
-                  ),
-                  const SizedBox(height: 30),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Align(
-                        alignment: Alignment.center,
-                        child: CustomButton(
-                          title: "Masuk",
-                          onPressed: () {
-                            Navigator.pushNamed(
-                                context, NavigationRoute.roleUserRoute.name);
-                          },
-                        )),
-                  ),
-                ],
+                    CustomTextfield(
+                      title: "Pasword",
+                      hintText: "Masukkan password disini",
+                      controller: passwordController,
+                      textInputType: TextInputType.text,
+                      isPassword: true,
+                      validator: (value) {
+                        if (value == null || value.length < 6) {
+                          return "Password minimal 6 karakter";
+                        }
+                        return null;
+                      },
+                    ),
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: Text(
+                        "Lupa Password?",
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                              color: CalcoColors.grey.color,
+                            ),
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+                    Align(
+                      alignment: Alignment.center,
+                      child: Align(
+                          alignment: Alignment.center,
+                          child: CustomButton(
+                            title: "Masuk",
+                            onPressed: _login,
+                          )),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

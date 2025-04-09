@@ -34,6 +34,7 @@ class AuthService {
         return newUser;
       }
     } on FirebaseAuthException catch (e) {
+      print("ERROR CODE REGISTER: ${e.code}");
       if (e.code == 'email-already-in-use') {
         throw Exception('Email sudah digunakan');
       } else if (e.code == 'weak-password') {
@@ -68,12 +69,15 @@ class AuthService {
         return userModel;
       }
     } on FirebaseAuthException catch (e) {
+      print("ERROR CODE LOGIN: ${e.code}");
       if (e.code == 'user-not-found') {
-        throw Exception('Email tidak ditemukan');
+        throw ('Email tidak ditemukan');
       } else if (e.code == 'wrong-password') {
         throw Exception('Password salah');
       } else if (e.code == 'invalid-email') {
         throw Exception('Format email tidak valid');
+      } else if (e.code == 'invalid-credential') {
+        throw Exception('Email salah atau tidak terdaftar');
       } else {
         throw Exception('Terjadi kesalahan saat masuk');
       }
@@ -105,5 +109,9 @@ class AuthService {
   // Sign Out
   Future<void> signOut() async {
     await _auth.signOut();
+  }
+
+  User? getFirebaseUser() {
+    return FirebaseAuth.instance.currentUser;
   }
 }
