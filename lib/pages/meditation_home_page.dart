@@ -3,8 +3,17 @@ import 'package:calco/style/colors/calco_colors.dart';
 import 'package:calco/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 
-class MeditationHomePage extends StatelessWidget {
+import '../widgets/emoji_button.dart';
+
+class MeditationHomePage extends StatefulWidget {
   const MeditationHomePage({super.key});
+
+  @override
+  State<MeditationHomePage> createState() => _MeditationHomePageState();
+}
+
+class _MeditationHomePageState extends State<MeditationHomePage> {
+  int selectedIndex = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -70,47 +79,49 @@ class MeditationHomePage extends StatelessWidget {
                         .copyWith(color: CalcoColors.primaryBlue.color),
                   ),
                   const SizedBox(height: 35),
-                  const Wrap(
-                    runSpacing: 29,
-                    spacing: 29,
-                    children: [
-                      EmojiButton(
-                        imageUrl: "assets/icons/icon_flower.png",
-                        title: "Tenang",
-                      ),
-                      EmojiButton(
-                        imageUrl: "assets/icons/icon_bahagia.png",
-                        title: "Bahagia",
-                      ),
-                      EmojiButton(
-                        imageUrl: "assets/icons/icon_cemas.png",
-                        title: "Cemas",
-                      ),
-                      EmojiButton(
-                        imageUrl: "assets/icons/icon_marah.png",
-                        title: "Marah",
-                      ),
-                      EmojiButton(
-                        imageUrl: "assets/icons/icon_frustasi.png",
-                        title: "Frustasi",
-                      ),
-                      EmojiButton(
-                        imageUrl: "assets/icons/icon_sedih.png",
-                        title: "Sedih",
-                      ),
-                      EmojiButton(
-                        imageUrl: "assets/icons/icon_bingung.png",
-                        title: "Bingung",
-                      ),
-                      EmojiButton(
-                        imageUrl: "assets/icons/icon_kewalahan.png",
-                        title: "Kewalahan",
-                      ),
-                      EmojiButton(
-                        imageUrl: "assets/icons/icon_antusias.png",
-                        title: "Antusias",
-                      ),
-                    ],
+                  StatefulBuilder(
+                    builder: (context, setState) {
+                      return Wrap(
+                        spacing: 29,
+                        runSpacing: 29,
+                        children: List.generate(9, (index) {
+                          final titleOptions = [
+                            "Tenang",
+                            "Bahagia",
+                            "Cemas",
+                            "Marah",
+                            "Frustasi",
+                            "Sedih",
+                            "Bingung",
+                            "Kewalahan",
+                            "Antusias"
+                          ];
+
+                          final imageOptions = [
+                            "assets/icons/icon_flower.png",
+                            "assets/icons/icon_bahagia.png",
+                            "assets/icons/icon_cemas.png",
+                            "assets/icons/icon_marah.png",
+                            "assets/icons/icon_frustasi.png",
+                            "assets/icons/icon_sedih.png",
+                            "assets/icons/icon_bingung.png",
+                            "assets/icons/icon_kewalahan.png",
+                            "assets/icons/icon_antusias.png",
+                          ];
+
+                          return EmojiButton(
+                            imageUrl: imageOptions[index],
+                            title: titleOptions[index],
+                            isSelected: selectedIndex == index,
+                            onTap: () {
+                              setState(() {
+                                selectedIndex = index;
+                              });
+                            },
+                          );
+                        }),
+                      );
+                    },
                   ),
                   const SizedBox(height: 70),
                   CustomButton(
@@ -127,53 +138,6 @@ class MeditationHomePage extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class EmojiButton extends StatelessWidget {
-  final String imageUrl;
-  final String title;
-  final VoidCallback? onTap;
-
-  const EmojiButton({
-    required this.imageUrl,
-    required this.title,
-    this.onTap,
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        InkWell(
-          onTap: onTap,
-          child: Container(
-            width: 91,
-            height: 91,
-            margin: const EdgeInsets.only(bottom: 12),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                      color: const Color(0xff010101).withOpacity(0.05),
-                      offset: const Offset(2, 3),
-                      blurRadius: 9.9)
-                ]),
-            child: Image.asset(
-              imageUrl,
-              width: 40,
-              height: 40,
-            ),
-          ),
-        ),
-        Text(
-          title,
-          style: Theme.of(context).textTheme.titleMedium,
-        )
-      ],
     );
   }
 }

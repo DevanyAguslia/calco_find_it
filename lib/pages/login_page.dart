@@ -47,7 +47,11 @@ class _LoginPageState extends State<LoginPage> {
       );
 
       // Optional: Navigasi
-      Navigator.pushReplacementNamed(context, NavigationRoute.homeRoute.name);
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        NavigationRoute.homeRoute.name,
+        (route) => false,
+      );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(e.toString())),
@@ -132,7 +136,9 @@ class _LoginPageState extends State<LoginPage> {
                       textInputType: TextInputType.text,
                       isPassword: true,
                       validator: (value) {
-                        if (value == null || value.length < 6) {
+                        if (value == null || value.isEmpty) {
+                          return "Inputan password tidak boleh kosong";
+                        } else if (value.length < 6) {
                           return "Password minimal 6 karakter";
                         }
                         return null;

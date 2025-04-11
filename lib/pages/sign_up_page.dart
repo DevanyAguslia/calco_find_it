@@ -82,7 +82,11 @@ class _SignUpPageState extends State<SignUpPage> {
       );
 
       // Optional: Navigasi ke halaman lain setelah daftar
-      Navigator.pushReplacementNamed(context, NavigationRoute.homeRoute.name);
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        NavigationRoute.homeRoute.name,
+        (route) => false,
+      );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(e.toString())),

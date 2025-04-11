@@ -25,7 +25,8 @@ class CustomTimeButton extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            height: 64,
+            width: 104,
+            height: 84,
             margin: const EdgeInsets.only(bottom: 12, right: 5),
             decoration: BoxDecoration(
               border: Border.all(

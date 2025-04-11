@@ -15,8 +15,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // int selectedIndex = -1;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,10 +27,34 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(height: 40),
             Align(
               alignment: Alignment.centerRight,
-              child: Image.asset(
-                "assets/icons/icon_setting.png",
-                width: 24,
-                height: 24,
+              child: PopupMenuButton<String>(
+                icon: Image.asset(
+                  "assets/icons/icon_setting.png",
+                  width: 24,
+                  height: 24,
+                ),
+                onSelected: (value) {
+                  if (value == 'logout') {
+                    // Aksi logout kamu di sini
+                    Navigator.pushNamedAndRemoveUntil(context,
+                        NavigationRoute.loginRoute.name, (route) => false);
+                  }
+                },
+                itemBuilder: (context) => [
+                  const PopupMenuItem(
+                    value: 'logout',
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.logout,
+                          color: Colors.red,
+                        ),
+                        SizedBox(width: 8),
+                        Text('Logout'),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: 21),
@@ -142,45 +164,6 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                 ),
                                 const SizedBox(height: 40),
-                                // Row(
-                                //   mainAxisAlignment:
-                                //       MainAxisAlignment.spaceBetween,
-                                //   children: [
-                                //     Expanded(
-                                //         child: CustomTimeButton(
-                                //       time: "00",
-                                //       title: "Jam",
-                                //       isSelected: selectedIndex == 0,
-                                //       onTap: () {
-                                //         setState(() {
-                                //           selectedIndex = 0;
-                                //           print("selectedIndex: $selectedIndex");
-                                //         });
-                                //       },
-                                //     )),
-                                //     const SizedBox(width: 10),
-                                //     Expanded(
-                                //         child: CustomTimeButton(
-                                //       time: "15",
-                                //       isSelected: selectedIndex == 1,
-                                //       onTap: () {
-                                //         setState(() {
-                                //           selectedIndex = 1;
-                                //           print("selectedIndex: $selectedIndex");
-                                //         });
-                                //       },
-                                //     )),
-                                //     const SizedBox(width: 10),
-                                //     Expanded(
-                                //         child: CustomTimeButton(
-                                //       time: "30",
-                                //       title: "Detik",
-                                //       isSelected: selectedIndex == 2,
-                                //       onTap: () =>
-                                //           setState(() => selectedIndex = 2),
-                                //     )),
-                                //   ],
-                                // ),
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceAround,
@@ -214,8 +197,10 @@ class _HomePageState extends State<HomePage> {
                                       child: CustomButton(
                                         title: "Mulai Terapi",
                                         onPressed: () {
-                                          Navigator.pushNamed(context,
-                                              NavigationRoute.homeRoute.name);
+                                          Navigator.pushNamed(
+                                              context,
+                                              NavigationRoute
+                                                  .meditationHomeRoute.name);
                                         },
                                       )),
                                 ),
@@ -232,114 +217,106 @@ class _HomePageState extends State<HomePage> {
                     child: ImageIconButton(
                   imageUrl: "assets/icons/icon_sound.png",
                   title: "Suara Relaksasi",
-                  onTap: () async {
-                    return showDialog(
+                  onTap: () {
+                    showDialog(
                       context: context,
                       builder: (context) {
                         int selectedIndex = 1;
-                        return AlertDialog(
-                          backgroundColor: Colors.white,
-                          contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 21),
-                          title: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                width: 32,
-                                height: 32,
-                                padding: const EdgeInsets.all(5),
-                                margin: const EdgeInsets.only(right: 12),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: CalcoColors.secondary.color,
-                                ),
-                                child: Image.asset(
-                                  "assets/icons/icon_sound.png",
-                                  width: 21,
-                                  height: 21,
-                                ),
-                              ),
-                              Text(
-                                "Suara Relaksasi",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleLarge!
-                                    .copyWith(
-                                      fontWeight: FontWeight.w700,
+                        return StatefulBuilder(
+                          builder: (context, setState) {
+                            return AlertDialog(
+                              backgroundColor: Colors.white,
+                              contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 21),
+                              title: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    width: 32,
+                                    height: 32,
+                                    padding: const EdgeInsets.all(5),
+                                    margin: const EdgeInsets.only(right: 12),
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: CalcoColors.secondary.color,
                                     ),
+                                    child: Image.asset(
+                                      "assets/icons/icon_sound.png",
+                                      width: 21,
+                                      height: 21,
+                                    ),
+                                  ),
+                                  Text(
+                                    "Suara Relaksasi",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleLarge!
+                                        .copyWith(
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                          content: SingleChildScrollView(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  "Suara latar yang membantu anak fokus dan merasa nyaman.",
-                                  textAlign: TextAlign.center,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium!
-                                      .copyWith(
-                                        color: CalcoColors.secondGrey.color,
-                                      ),
-                                ),
-                                const SizedBox(height: 40),
-                                Row(
-                                  children: [
-                                    Expanded(
-                                        child: CustomTimeButton(
-                                      imageUrl: "assets/icons/icon_white.png",
-                                      title: "White Noise",
-                                      isSelected: selectedIndex == 2,
-                                      onTap: () =>
-                                          setState(() => selectedIndex = 2),
-                                    )),
-                                    const SizedBox(width: 10),
-                                    Expanded(
-                                        child: CustomTimeButton(
-                                      imageUrl: "assets/icons/icon_brown.png",
-                                      title: "Brown Noise",
-                                      isSelected: selectedIndex == 2,
-                                      onTap: () =>
-                                          setState(() => selectedIndex = 2),
-                                    )),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Expanded(
-                                        child: CustomTimeButton(
-                                      imageUrl: "assets/icons/icon_rainy.png",
-                                      title: "Suara Hujan",
-                                      isSelected: selectedIndex == 2,
-                                      onTap: () =>
-                                          setState(() => selectedIndex = 2),
-                                    )),
-                                    const SizedBox(width: 10),
-                                    Expanded(
-                                        child: CustomTimeButton(
-                                      imageUrl: "assets/icons/icon_wave.png",
-                                      title: "Suara Ombak",
-                                      isSelected: selectedIndex == 2,
-                                      onTap: () =>
-                                          setState(() => selectedIndex = 2),
-                                    )),
-                                  ],
-                                ),
-                                const SizedBox(height: 54),
-                                Align(
-                                    alignment: Alignment.center,
-                                    child: CustomButton(
-                                      title: "Mulai Terapi",
-                                      onPressed: () {
-                                        Navigator.pushNamed(context,
-                                            NavigationRoute.homeRoute.name);
-                                      },
-                                    )),
-                              ],
-                            ),
-                          ),
+                              content: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    "Suara latar yang membantu anak fokus dan merasa nyaman.",
+                                    textAlign: TextAlign.center,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(
+                                          color: CalcoColors.secondGrey.color,
+                                        ),
+                                  ),
+                                  const SizedBox(height: 40),
+                                  Wrap(
+                                    spacing: 2,
+                                    runSpacing: 2,
+                                    children: List.generate(4, (index) {
+                                      final titleOptions = [
+                                        "White Noise",
+                                        "Brown Noise",
+                                        "Suara Hujan",
+                                        "Suara Ombak",
+                                      ];
+
+                                      final imageOptions = [
+                                        "assets/icons/icon_white.png",
+                                        "assets/icons/icon_brown.png",
+                                        "assets/icons/icon_rainy.png",
+                                        "assets/icons/icon_wave.png",
+                                      ];
+
+                                      return CustomTimeButton(
+                                        imageUrl: imageOptions[index],
+                                        title: titleOptions[index],
+                                        isSelected: selectedIndex == index,
+                                        onTap: () {
+                                          setState(() {
+                                            selectedIndex = index;
+                                          });
+                                        },
+                                      );
+                                    }),
+                                  ),
+                                  const SizedBox(height: 54),
+                                  Align(
+                                      alignment: Alignment.center,
+                                      child: CustomButton(
+                                        title: "Mulai Terapi",
+                                        onPressed: () {
+                                          Navigator.pushNamed(
+                                              context,
+                                              NavigationRoute
+                                                  .meditationHomeRoute.name);
+                                        },
+                                      )),
+                                ],
+                              ),
+                            );
+                          },
                         );
                       },
                     );

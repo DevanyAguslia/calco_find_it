@@ -34,7 +34,6 @@ class AuthService {
         return newUser;
       }
     } on FirebaseAuthException catch (e) {
-      print("ERROR CODE REGISTER: ${e.code}");
       if (e.code == 'email-already-in-use') {
         throw Exception('Email sudah digunakan');
       } else if (e.code == 'weak-password') {
@@ -69,7 +68,6 @@ class AuthService {
         return userModel;
       }
     } on FirebaseAuthException catch (e) {
-      print("ERROR CODE LOGIN: ${e.code}");
       if (e.code == 'user-not-found') {
         throw ('Email tidak ditemukan');
       } else if (e.code == 'wrong-password') {
@@ -99,7 +97,6 @@ class AuthService {
         return userModel;
       }
     } catch (e) {
-      print('Get current user error: $e');
       rethrow;
     }
 
